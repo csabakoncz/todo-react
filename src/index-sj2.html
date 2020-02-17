@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>React todo app</title>
+</head>
+
+<body>
+        <script src="https://unpkg.com/systemjs@0.19.39/dist/system.src.js"></script>
+
+        <script src="system-config2.js"></script>
+        <script>
+
+              boot();
+
+              async function boot(){
+                  console.log(await SystemJS.import('app/main'))
+              }
+          </script>
+
+        <div id="content"></div>
+
+</body>
+
+</html>

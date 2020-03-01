@@ -1,27 +1,28 @@
 import * as React from 'react';
 import {AddTodo} from './add-todo'
+import {Todo} from './todo'
+import { AppState } from '../model';
 
-interface AppRootState {
-  title: string
+interface AppProps {
+   appState: AppState,
+   click: ()=>void
 }
 
-export class AppRoot extends React.Component <{}, AppRootState>{
+export class AppRoot extends React.Component <AppProps, {}>{
 
-  constructor(props: any){
+  constructor(props: AppProps){
     super(props);
-    this.state={
-      title:'MyApp'
-    }
   }
 
   clicked(){
-      this.setState({title:this.state.title + 'A'})
+      this.props.click()
   }
 
   render() {
     return <div>
-      <h1 onClick={()=>this.clicked()}>App title: {this.state.title}</h1>
+      <h1 onClick={()=>this.clicked()}>App title: {this.props.appState.title}</h1>
       <AddTodo></AddTodo>
+      {this.props.appState.todos.map(todo=><Todo todo={todo}></Todo>)}
       </div>
   }
 }

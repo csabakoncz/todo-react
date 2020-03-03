@@ -1,13 +1,17 @@
 import * as React from 'react';
 
+interface AddTodoProps {
+  addTodo: (todoText: string)=>void
+}
+
 interface AddTodoState {
   todoText: string
 }
 
-export class AddTodo extends React.Component<{}, AddTodoState>{
+export class AddTodo extends React.Component<AddTodoProps, AddTodoState>{
 
-  constructor() {
-    super({});
+  constructor(props) {
+    super(props);
     this.state = {
       todoText: ''
     }
@@ -23,6 +27,7 @@ export class AddTodo extends React.Component<{}, AddTodoState>{
   submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     console.log('about to submit', this.state.todoText)
+    this.props.addTodo(this.state.todoText)
     this.setState({
       todoText: ''
     })

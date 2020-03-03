@@ -6,7 +6,8 @@ import { AppState } from '../model';
 interface AppProps {
    appState: AppState,
    setAppRoot: (arc: React.Component)=>void,
-   click: (appState: AppState, component: React.Component)=>void
+   click: (appState: AppState)=>void,
+   addTodo: (appState: AppState, todoText: string)=>void
 }
 
 export class AppRoot extends React.Component <AppProps, AppState>{
@@ -18,13 +19,17 @@ export class AppRoot extends React.Component <AppProps, AppState>{
   }
 
   clicked(){
-      this.props.click(this.state, this)
+      this.props.click(this.state)
+  }
+
+  addTodo(todoText: string){
+      this.props.addTodo(this.state, todoText)
   }
 
   render() {
     return <div>
       <h1 onClick={()=>this.clicked()}>App title: {this.state.title}</h1>
-      <AddTodo></AddTodo>
+      <AddTodo addTodo={(text)=>this.addTodo(text)}></AddTodo>
       {this.state.todos.map(todo=><Todo todo={todo}></Todo>)}
       </div>
   }

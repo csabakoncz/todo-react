@@ -21,6 +21,12 @@ const props = {
             ...state,
             title: state.title + 'A'
         })
+    },
+    addTodo: (state, todoText)=>{
+        appRootComp.setState({
+            ...state,
+            todos: [{text:todoText, id: Math.random()}].concat(state.todos)
+        })
     }
 }
 

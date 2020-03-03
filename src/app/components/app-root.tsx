@@ -7,7 +7,8 @@ interface AppProps {
    appState: AppState,
    setAppRoot: (arc: React.Component)=>void,
    click: (appState: AppState)=>void,
-   addTodo: (appState: AppState, todoText: string)=>void
+   addTodo: (appState: AppState, todoText: string)=>void,
+   toggleTodo: (appState: AppState, todoId: string)=>void,
 }
 
 export class AppRoot extends React.Component <AppProps, AppState>{
@@ -26,11 +27,15 @@ export class AppRoot extends React.Component <AppProps, AppState>{
       this.props.addTodo(this.state, todoText)
   }
 
+  toggleTodo(todoId: string){
+      this.props.toggleTodo(this.state, todoId)
+  }
+
   render() {
     return <div>
       <h1 onClick={()=>this.clicked()}>App title: {this.state.title}</h1>
       <AddTodo addTodo={(text)=>this.addTodo(text)}></AddTodo>
-      {this.state.todos.map(todo=><Todo todo={todo} key={todo.id}></Todo>)}
+      {this.state.todos.map(todo=><Todo todo={todo} key={todo.id} toggle={(todoId)=>this.toggleTodo(todoId)}></Todo>)}
       </div>
   }
 }

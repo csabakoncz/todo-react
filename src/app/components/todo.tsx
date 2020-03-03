@@ -2,7 +2,8 @@ import * as React from 'react'
 import {Todo as ModelTodo} from '../model/index'
 
 interface TodoProps{
-    todo: ModelTodo
+    todo: ModelTodo,
+    toggle: (todoId: string)=>void
 }
 export class Todo extends React.Component<TodoProps>{
     constructor(props: TodoProps){
@@ -11,6 +12,7 @@ export class Todo extends React.Component<TodoProps>{
 
     clicked(){
         console.log('todo clicked')
+        this.props.toggle(this.props.todo.id)
     }
     render(){
         var classes=['todo']

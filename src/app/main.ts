@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom';
 
 import {AppRoot} from './components/app-root'
 import {INITIAL_STATE} from './services/initial-state'
+import { AppState } from './model';
 
 
 const state = INITIAL_STATE;
@@ -26,6 +27,12 @@ const props = {
         appRootComp.setState({
             ...state,
             todos: [{text:todoText, id: Math.random()}].concat(state.todos)
+        })
+    },
+    toggleTodo: (state: AppState, todoId)=>{
+        appRootComp.setState({
+            ...state,
+            todos: state.todos.map(todo=>(todoId==todo.id?{...todo, completed: !todo.completed}:todo))
         })
     }
 }

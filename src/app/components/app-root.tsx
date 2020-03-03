@@ -30,7 +30,7 @@ export class AppRoot extends React.Component <AppProps, AppState>{
     return <div>
       <h1 onClick={()=>this.clicked()}>App title: {this.state.title}</h1>
       <AddTodo addTodo={(text)=>this.addTodo(text)}></AddTodo>
-      {this.state.todos.map(todo=><Todo todo={todo}></Todo>)}
+      {this.state.todos.map(todo=><Todo todo={todo} key={todo.id}></Todo>)}
       </div>
   }
 }

@@ -1,41 +1,42 @@
 import * as React from 'react';
 import {AddTodo} from './add-todo'
 import {Todo} from './todo'
-import { AppState } from '../model';
+import { AppState, Todo as ModelTodo } from '../model';
+import { Store } from 'redux';
+import { Actions } from '../actions/index';
 
 interface AppProps {
-   appState: AppState,
-   setAppRoot: (arc: React.Component)=>void,
-   click: (appState: AppState)=>void,
-   addTodo: (appState: AppState, todoText: string)=>void,
-   toggleTodo: (appState: AppState, todoId: string)=>void,
+   stateStore: Store<AppState>
 }
 
 export class AppRoot extends React.Component <AppProps, AppState>{
 
   constructor(props: AppProps){
     super(props);
-    this.state = props.appState
-    props.setAppRoot(this)
+    const store = props.stateStore;
+    this.state = store.getState()
+    store.subscribe(()=>{
+      this.setState(store.getState())
+    })
   }
 
   clicked(){
-      this.props.click(this.state)
+      this.props.stateStore.dispatch(Actions.titleClick())
+    }
+
+    addTodo(todoText: string){
+      this.props.stateStore.dispatch(Actions.addTodo(todoText))
   }
 
-  addTodo(todoText: string){
-      this.props.addTodo(this.state, todoText)
-  }
-
-  toggleTodo(todoId: string){
-      this.props.toggleTodo(this.state, todoId)
+  toggleTodo(todo: ModelTodo){
+      this.props.stateStore.dispatch(Actions.toggleTodoAnimated(todo))
   }
 
   render() {
     return <div>
       <h1 onClick={()=>this.clicked()}>App title: {this.state.title}</h1>
       <AddTodo addTodo={(text)=>this.addTodo(text)}></AddTodo>
-      {this.state.todos.map(todo=><Todo todo={todo} key={todo.id} toggle={(todoId)=>this.toggleTodo(todoId)}></Todo>)}
+      {this.state.todos.map(todo=><Todo todo={todo} key={todo.id} toggle={(todoId)=>this.toggleTodo(todo)}></Todo>)}
       </div>
   }
 }

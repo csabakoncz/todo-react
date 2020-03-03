@@ -7,16 +7,21 @@ import {AppRoot} from './components/app-root'
 import {INITIAL_STATE} from './services/initial-state'
 
 
-var el = document.getElementById("content");
 const state = INITIAL_STATE;
+
+var appRootComp: AppRoot;
+
 const props = {
     appState: state,
-    click: ()=>{
-        state.title += 'A'
-        render()
+    setAppRoot: (arc: AppRoot)=>{
+        appRootComp = arc
+    },
+    click: (state)=>{
+        appRootComp.setState({
+            ...state,
+            title: state.title + 'A'
+        })
     }
 }
-function render(){
-    ReactDOM.render( React.createElement(AppRoot,props, null), el);
-}
-render()
+
+ReactDOM.render( React.createElement(AppRoot,props, null), document.getElementById("content"))
